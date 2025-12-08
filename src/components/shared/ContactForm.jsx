@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { SendEmailViaWeb3Forms } from '@/api/integrations';
+import { SubmitToHubSpot } from '@/api/integrations';
 
 export default function ContactForm({ propertyId = null, defaultInterest = "General Inquiry" }) {
   const [formData, setFormData] = useState({
@@ -23,10 +23,10 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
     setIsSubmitting(true);
 
     try {
-      console.log('📧 Submitting form via Web3Forms...');
+      console.log('📧 Submitting form to HubSpot...');
       
-      // Submit via Web3Forms
-      await SendEmailViaWeb3Forms({
+      // Submit to HubSpot Forms API
+      await SubmitToHubSpot({
         ...formData,
         property_id: propertyId
       });
