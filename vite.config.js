@@ -6,7 +6,9 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: true
+    allowedHosts: true,
+    // Fix for React Router - fallback to index.html for all routes
+    historyApiFallback: true
   },
   resolve: {
     alias: {

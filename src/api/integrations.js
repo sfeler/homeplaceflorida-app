@@ -1,8 +1,13 @@
 // Contact form integration using Web3Forms
 
+// Stub exports for backward compatibility with other components
+export const InvokeLLM = () => Promise.resolve({ response: '' });
+export const SendEmail = () => Promise.resolve({ success: true });
+export const UploadFile = () => Promise.resolve({ file_url: '' });
+
 /**
- * Send email via Web3Forms (EASIEST - no signup needed!)
- * Just get an access key from: https://web3forms.com/
+ * Send email via Web3Forms
+ * Get your access key from: https://web3forms.com/
  * Free tier: 250 submissions/month
  */
 export const SendEmailViaWeb3Forms = async (formData) => {
