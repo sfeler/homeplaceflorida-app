@@ -5,6 +5,7 @@ import { createPageUrl } from '@/utils';
 import { Home, Search, FileText, Phone, Info, Menu, X, Heart, User, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { User as UserEntity } from '@/api/entities';
+import CrispChatLabel from '@/components/shared/CrispChatLabel';
 import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
 
 export default function Layout({ children, currentPageName }) {
@@ -116,6 +117,9 @@ export default function Layout({ children, currentPageName }) {
 
       {/* Main Content */}
       <main>{children}</main>
+
+      {/* Crisp Chat Label */}
+      <CrispChatLabel />
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white mt-20">

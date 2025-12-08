@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ContactSubmission } from '@/api/entities';
-import { SendEmail } from '@/api/integrations';
+import { SubmitToHubSpot, SendEmailViaEmailJS } from '@/api/integrations';
 
 export default function ContactForm({ propertyId = null, defaultInterest = "General Inquiry" }) {
   const [formData, setFormData] = useState({
@@ -24,27 +24,30 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
     setIsSubmitting(true);
 
     try {
-      // Save to database
-      await ContactSubmission.create({
-        ...formData,
-        property_id: propertyId
-      });
+      // Try HubSpot first, fallback to EmailJS if not configured
+      const hubspotPortalId = import.meta.env.VITE_HUBSPOT_PORTAL_ID;
+      const emailjsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 
-      // Send email notification
-      await SendEmail({
-        from_name: 'HomePlace Florida Real Estate',
-        to: formData.email,
-        subject: 'We received your message',
-        body: `Hi ${formData.name},\n\nThank you for contacting HomePlace Florida Real Estate. We've received your ${formData.interest.toLowerCase()} inquiry and will get back to you within 24 hours.\n\nBest regards,\nThe HomePlace Florida Team`
-      });
-
-      // Send notification to team
-      await SendEmail({
-        from_name: 'HomePlace Florida Website',
-        to: 'team@homeplaceflorida.com',
-        subject: `New ${formData.interest} Inquiry from ${formData.name}`,
-        body: `New contact form submission:\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nInterest: ${formData.interest}\n\nMessage:\n${formData.message}${propertyId ? `\n\nProperty ID: ${propertyId}` : ''}`
-      });
+      if (hubspotPortalId) {
+        // Submit to HubSpot (includes CRM tracking)
+        await SubmitToHubSpot({
+          ...formData,
+          property_id: propertyId
+        });
+      } else if (emailjsServiceId) {
+        // Fallback to EmailJS
+        await SendEmailViaEmailJS({
+          ...formData,
+          property_id: propertyId
+        });
+      } else {
+        // Save to database as fallback
+        await ContactSubmission.create({
+          ...formData,
+          property_id: propertyId
+        });
+        console.warn('No email service configured. Form data saved to database only.');
+      }
 
       setIsSuccess(true);
       setFormData({
@@ -58,6 +61,7 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
+      alert('There was an error submitting your form. Please try again or call us at (727) 492-6291.');
     } finally {
       setIsSubmitting(false);
     }
