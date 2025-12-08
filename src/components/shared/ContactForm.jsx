@@ -5,8 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ContactSubmission } from '@/api/entities';
-import { SubmitToHubSpot, SendEmailViaEmailJS, SendEmailViaWeb3Forms } from '@/api/integrations';
+import { SendEmailViaWeb3Forms } from '@/api/integrations';
 
 export default function ContactForm({ propertyId = null, defaultInterest = "General Inquiry" }) {
   const [formData, setFormData] = useState({
@@ -24,37 +23,13 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
     setIsSubmitting(true);
 
     try {
-      // Try services in priority order: HubSpot > Web3Forms > EmailJS > Database
-      const hubspotPortalId = import.meta.env.VITE_HUBSPOT_PORTAL_ID;
-      const web3formsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-      const emailjsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-
-      if (hubspotPortalId) {
-        // Submit to HubSpot (includes CRM tracking)
-        await SubmitToHubSpot({
-          ...formData,
-          property_id: propertyId
-        });
-      } else if (web3formsKey) {
-        // Web3Forms - easiest option!
-        await SendEmailViaWeb3Forms({
-          ...formData,
-          property_id: propertyId
-        });
-      } else if (emailjsServiceId) {
-        // Fallback to EmailJS
-        await SendEmailViaEmailJS({
-          ...formData,
-          property_id: propertyId
-        });
-      } else {
-        // Save to database as fallback
-        await ContactSubmission.create({
-          ...formData,
-          property_id: propertyId
-        });
-        console.warn('No email service configured. Form data saved to database only.');
-      }
+      console.log('📧 Submitting form via Web3Forms...');
+      
+      // Submit via Web3Forms
+      await SendEmailViaWeb3Forms({
+        ...formData,
+        property_id: propertyId
+      });
 
       setIsSuccess(true);
       setFormData({
@@ -67,8 +42,12 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
 
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error submitting your form. Please try again or call us at (727) 492-6291.');
+      console.error('❌ Error submitting form:', error);
+      console.error('❌ Error details:', {
+        message: error.message,
+        stack: error.stack
+      });
+      alert(`There was an error submitting your form: ${error.message}\n\nPlease try again or call us at (727) 492-6291.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -76,16 +55,6 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const fillTestData = () => {
-    setFormData({
-      name: 'Steve',
-      email: 'sfeler@gmail.com',
-      phone: '(727) 492-6291',
-      interest: defaultInterest,
-      message: 'This is a test message from my contact form to make sure Web3Forms is working correctly!'
-    });
   };
 
   if (isSuccess) {
