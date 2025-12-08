@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ContactSubmission } from '@/api/entities';
-import { SubmitToHubSpot, SendEmailViaEmailJS } from '@/api/integrations';
+import { SubmitToHubSpot, SendEmailViaEmailJS, SendEmailViaWeb3Forms } from '@/api/integrations';
 
 export default function ContactForm({ propertyId = null, defaultInterest = "General Inquiry" }) {
   const [formData, setFormData] = useState({
@@ -24,13 +24,20 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
     setIsSubmitting(true);
 
     try {
-      // Try HubSpot first, fallback to EmailJS if not configured
+      // Try services in priority order: HubSpot > Web3Forms > EmailJS > Database
       const hubspotPortalId = import.meta.env.VITE_HUBSPOT_PORTAL_ID;
+      const web3formsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
       const emailjsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 
       if (hubspotPortalId) {
         // Submit to HubSpot (includes CRM tracking)
         await SubmitToHubSpot({
+          ...formData,
+          property_id: propertyId
+        });
+      } else if (web3formsKey) {
+        // Web3Forms - easiest option!
+        await SendEmailViaWeb3Forms({
           ...formData,
           property_id: propertyId
         });
@@ -69,6 +76,16 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const fillTestData = () => {
+    setFormData({
+      name: 'Steve',
+      email: 'sfeler@gmail.com',
+      phone: '(727) 492-6291',
+      interest: defaultInterest,
+      message: 'This is a test message from my contact form to make sure Web3Forms is working correctly!'
+    });
   };
 
   if (isSuccess) {

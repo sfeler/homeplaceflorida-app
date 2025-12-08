@@ -123,6 +123,57 @@ export const SendEmailViaEmailJS = async (formData) => {
   return await response.json();
 };
 
+/**
+ * Send email via Web3Forms (EASIEST - no signup needed!)
+ * Just get an access key from: https://web3forms.com/
+ * Free tier: 250 submissions/month
+ */
+export const SendEmailViaWeb3Forms = async (formData) => {
+  const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+  if (!WEB3FORMS_ACCESS_KEY) {
+    console.error('Web3Forms access key not configured');
+    throw new Error('Web3Forms not configured');
+  }
+
+  const web3formsUrl = 'https://api.web3forms.com/submit';
+
+  const payload = {
+    access_key: WEB3FORMS_ACCESS_KEY,
+    name: formData.name,
+    email: formData.email,
+    phone: formData.phone || 'Not provided',
+    subject: `New Contact: ${formData.interest}`,
+    message: `
+Interest: ${formData.interest}
+Phone: ${formData.phone || 'Not provided'}
+
+Message:
+${formData.message}
+
+---
+From: ${formData.name} (${formData.email})
+${formData.property_id ? `Property ID: ${formData.property_id}` : ''}
+    `.trim()
+  };
+
+  const response = await fetch(web3formsUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Web3Forms failed: ${error}`);
+  }
+
+  return await response.json();
+};
+
 // Legacy stub - keeping for backward compatibility
 export const SendEmail = () => Promise.resolve({ success: true });
 
