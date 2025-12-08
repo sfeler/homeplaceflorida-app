@@ -1,0 +1,198 @@
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { BlogPost as BlogPostEntity } from '@/api/entities';
+import { ArrowLeft, Clock, Calendar, Tag, Youtube } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
+import ReactMarkdown from 'react-markdown';
+
+export default function BlogPost() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const postId = urlParams.get('id');
+
+  const { data: post, isLoading } = useQuery({
+    queryKey: ['blogPost', postId],
+    queryFn: async () => {
+      const posts = await BlogPostEntity.filter({ id: postId });
+      return posts[0];
+    },
+    enabled: !!postId
+  });
+
+  const { data: relatedPosts } = useQuery({
+    queryKey: ['relatedPosts', post?.category],
+    queryFn: async () => {
+      if (!post) return [];
+      const related = await BlogPostEntity.filter({ 
+        published: true, 
+        category: post.category 
+      }, '-created_date', 4);
+      return related.filter(p => p.id !== post.id).slice(0, 3);
+    },
+    enabled: !!post
+  });
+
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+
+  if (!post) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold mb-4">Post not found</h1>
+          <Link to={createPageUrl('Blog')}>
+            <Button>Back to Blog</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50">
+      {/* Back Button */}
+      <div className="bg-white border-b">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 py-4">
+          <Link to={createPageUrl('Blog')}>
+            <Button variant="ghost" className="gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Blog
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Cover Image */}
+      {post.cover_image && (
+        <div className="bg-black">
+          <div className="max-w-5xl mx-auto">
+            <div className="relative h-[50vh] min-h-[400px]">
+              <img
+                src={post.cover_image}
+                alt={post.title}
+                className="w-full h-full object-cover opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Article Content */}
+      <article className="max-w-4xl mx-auto px-6 lg:px-8 py-12">
+        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 -mt-20 relative z-10">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <Badge className="bg-amber-500 text-slate-900">
+                {post.category}
+              </Badge>
+              <div className="flex items-center text-sm text-slate-500 gap-1">
+                <Clock className="h-4 w-4" />
+                {post.read_time || 5} min read
+              </div>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+              {post.title}
+            </h1>
+
+            {/* Author & Date */}
+            <div className="flex items-center gap-4 pb-6 border-b">
+              {post.author_photo && (
+                <img 
+                  src={post.author_photo}
+                  alt={post.author_name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              )}
+              <div>
+                <div className="font-medium text-slate-900">{post.author_name || 'HomePlace Florida Team'}</div>
+                <div className="text-sm text-slate-500 flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  {new Date(post.created_date).toLocaleDateString('en-US', { 
+                    month: 'long', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* YouTube Video */}
+          {post.youtube_url && (
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
+                <Youtube className="h-5 w-5 text-red-600" />
+                Video
+              </h2>
+              <div className="aspect-video rounded-lg overflow-hidden">
+                <iframe
+                  src={post.youtube_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
+                  title="Video"
+                  className="w-full h-full"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Content */}
+          <div className="prose prose-lg max-w-none prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-amber-600 prose-strong:text-slate-900">
+            <ReactMarkdown>{post.content}</ReactMarkdown>
+          </div>
+
+          {/* Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-8 pt-8 border-t">
+              <div className="flex items-center gap-2 flex-wrap">
+                <Tag className="h-4 w-4 text-slate-400" />
+                {post.tags.map((tag, index) => (
+                  <Badge key={index} variant="outline">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Related Posts */}
+        {relatedPosts && relatedPosts.length > 0 && (
+          <div className="mt-16">
+            <h2 className="text-3xl font-semibold text-slate-900 mb-8">Related Articles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <Link key={relatedPost.id} to={createPageUrl('BlogPost') + `?id=${relatedPost.id}`}>
+                  <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all">
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={relatedPost.cover_image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&q=80'}
+                        alt={relatedPost.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <Badge variant="outline" className="text-xs mb-2">
+                        {relatedPost.category}
+                      </Badge>
+                      <h3 className="font-semibold text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-2">
+                        {relatedPost.title}
+                      </h3>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </article>
+    </div>
+  );
+}
