@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import ContactForm from '../components/shared/ContactForm';
 
@@ -46,6 +46,23 @@ export default function Contact() {
                   <h3 className="font-semibold text-slate-900 mb-1">Phone</h3>
                   <p className="text-slate-600">(727) 492-6291</p>
                   <p className="text-sm text-slate-500 mt-1">Monday - Saturday</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 cursor-pointer hover:shadow-md transition-shadow" onClick={() => {
+              if (window.$crisp) {
+                window.$crisp.push(['do', 'chat:open']);
+              }
+            }}>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <MessageCircle className="h-6 w-6 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-slate-900 mb-1">Chat with us</h3>
+                  <p className="text-slate-600">Get instant answers</p>
+                  <p className="text-sm text-slate-500 mt-1">Click to start a conversation</p>
                 </div>
               </div>
             </Card>
