@@ -7,15 +7,50 @@ import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 
 export default function BlogCard({ post }) {
+  // Handle both base64 and URL paths for images
+  const getImageSrc = (imagePath) => {
+    if (!imagePath) return 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80';
+    // If it's already a base64 string or full URL, use it directly
+    if (imagePath.startsWith('data:') || imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    // Otherwise it's a relative path, use as-is
+    return imagePath;
+  };
+
+  // Check if content is HTML (contains HTML tags)
+  const isHTML = (content) => {
+    if (!content) return false;
+    const htmlRegex = /<[a-z][\s\S]*>/i;
+    return htmlRegex.test(content);
+  };
+
+  // Strip HTML tags for plain text preview
+  const stripHTML = (html) => {
+    if (!html) return '';
+    // Remove HTML tags using regex
+    return html.replace(/<[^>]*>/g, '').trim();
+  };
+
+  const coverImage = getImageSrc(post.featured_image || post.cover_image);
+  
+  // Get excerpt - if HTML, strip tags for preview, otherwise use as-is
+  const excerptText = post.excerpt 
+    ? (isHTML(post.excerpt) ? stripHTML(post.excerpt) : post.excerpt)
+    : '';
+
   return (
     <Link to={createPageUrl('BlogPost') + `?id=${post.id}`}>
       <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white h-full flex flex-col">
         {/* Image */}
         <div className="relative h-56 overflow-hidden">
           <img 
-            src={post.cover_image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80'}
+            src={coverImage}
             alt={post.title}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            onError={(e) => {
+              e.target.src = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80';
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           
@@ -42,9 +77,11 @@ export default function BlogCard({ post }) {
             {post.title}
           </h3>
 
-          <p className="text-slate-600 text-sm line-clamp-3 mb-4 flex-grow">
-            {post.excerpt}
-          </p>
+          {excerptText && (
+            <p className="text-slate-600 text-sm line-clamp-3 mb-4 flex-grow">
+              {excerptText}
+            </p>
+          )}
 
           {/* Author & Date */}
           <div className="flex items-center justify-between pt-4 border-t border-slate-100">

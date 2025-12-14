@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function FeaturedProperties() {
   const { data: properties, isLoading } = useQuery({
     queryKey: ['featuredProperties'],
-    queryFn: () => Property.filter({ featured: true, status: 'Active' }, '-created_date', 6),
+    queryFn: () => Property.filter({ featured: true, status: 'Active' }, null, 6),
     initialData: []
   });
 
@@ -26,7 +26,7 @@ export default function FeaturedProperties() {
             Exceptional Properties
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Discover hand-picked homes in Pinellas County's most desirable locations
+            Discover hand-picked homes in the most desirable locations
           </p>
         </div>
 

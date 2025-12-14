@@ -32,7 +32,7 @@ export default function Hero() {
           </h1>
           
           <p className="text-xl text-gray-300 mb-10 leading-relaxed font-light max-w-2xl">
-            Discover exceptional properties in Pinellas County's most sought-after neighborhoods. 
+            Discover exceptional properties in the most sought-after neighborhoods. 
             Expert guidance, personalized service, exceptional results.
           </p>
 

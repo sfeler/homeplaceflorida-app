@@ -26,7 +26,7 @@ const AMENITIES = [
   { key: 'newConstruction', label: 'New Construction' },
 ];
 
-export default function SearchFilters({ filters, onFilterChange, onSearch, onReset }) {
+export default function SearchFilters({ filters, onFilterChange, onSearch, onReset, searchQuery, onSearchQueryChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -61,8 +61,33 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
     ...(filters.amenities || [])
   ].filter(Boolean).length;
 
-  const FilterContent = () => (
+  const filterContent = (
     <div className="space-y-6">
+      {/* Search Bar */}
+      <div className="space-y-2">
+        <Label>Search Properties</Label>
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search anything..."
+            value={searchQuery || ''}
+            onChange={(e) => onSearchQueryChange(e.target.value)}
+            className="w-full px-3 py-2 pl-10 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          />
+          <Search
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => onSearchQueryChange('')}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
       <div className="space-y-2">
         <Label>Location</Label>
         <Input
@@ -75,12 +100,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Min Price</Label>
-          <Select value={filters.minPrice || ''} onValueChange={(val) => handleChange('minPrice', val)}>
+          <Select value={filters.minPrice || '0'} onValueChange={(val) => handleChange('minPrice', val === '0' ? '' : val)}>
             <SelectTrigger>
               <SelectValue placeholder="No min" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={null}>No min</SelectItem>
+              <SelectItem value="0">No min</SelectItem>
               <SelectItem value="100000">$100,000</SelectItem>
               <SelectItem value="200000">$200,000</SelectItem>
               <SelectItem value="300000">$300,000</SelectItem>
@@ -94,12 +119,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
 
         <div className="space-y-2">
           <Label>Max Price</Label>
-          <Select value={filters.maxPrice || ''} onValueChange={(val) => handleChange('maxPrice', val)}>
+          <Select value={filters.maxPrice || '999999999'} onValueChange={(val) => handleChange('maxPrice', val === '999999999' ? '' : val)}>
             <SelectTrigger>
               <SelectValue placeholder="No max" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={null}>No max</SelectItem>
+              <SelectItem value="999999999">No max</SelectItem>
               <SelectItem value="200000">$200,000</SelectItem>
               <SelectItem value="300000">$300,000</SelectItem>
               <SelectItem value="400000">$400,000</SelectItem>
@@ -115,12 +140,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Beds</Label>
-          <Select value={filters.beds || ''} onValueChange={(val) => handleChange('beds', val)}>
+          <Select value={filters.beds || '0'} onValueChange={(val) => handleChange('beds', val === '0' ? '' : val)}>
             <SelectTrigger>
               <SelectValue placeholder="Any" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={null}>Any</SelectItem>
+              <SelectItem value="0">Any</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -132,12 +157,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
 
         <div className="space-y-2">
           <Label>Baths</Label>
-          <Select value={filters.baths || ''} onValueChange={(val) => handleChange('baths', val)}>
+          <Select value={filters.baths || '0'} onValueChange={(val) => handleChange('baths', val === '0' ? '' : val)}>
             <SelectTrigger>
               <SelectValue placeholder="Any" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={null}>Any</SelectItem>
+              <SelectItem value="0">Any</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -149,18 +174,17 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
 
       <div className="space-y-2">
         <Label>Property Type</Label>
-        <Select value={filters.propertyType || ''} onValueChange={(val) => handleChange('propertyType', val)}>
+        <Select value={filters.propertyType || 'all'} onValueChange={(val) => handleChange('propertyType', val === 'all' ? '' : val)}>
           <SelectTrigger>
             <SelectValue placeholder="All types" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={null}>All types</SelectItem>
-            <SelectItem value="Single Family">Single Family</SelectItem>
+            <SelectItem value="all">All types</SelectItem>
+            <SelectItem value="Single Family">Single Family Home</SelectItem>
             <SelectItem value="Condo">Condo</SelectItem>
             <SelectItem value="Townhouse">Townhouse</SelectItem>
             <SelectItem value="Multi-Family">Multi-Family</SelectItem>
             <SelectItem value="Land">Land</SelectItem>
-            <SelectItem value="Commercial">Commercial</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -178,12 +202,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Min Sq Ft</Label>
-              <Select value={filters.minSqft || ''} onValueChange={(val) => handleChange('minSqft', val)}>
+              <Select value={filters.minSqft || '0'} onValueChange={(val) => handleChange('minSqft', val === '0' ? '' : val)}>
                 <SelectTrigger>
                   <SelectValue placeholder="No min" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={null}>No min</SelectItem>
+                  <SelectItem value="0">No min</SelectItem>
                   <SelectItem value="500">500 sqft</SelectItem>
                   <SelectItem value="1000">1,000 sqft</SelectItem>
                   <SelectItem value="1500">1,500 sqft</SelectItem>
@@ -196,12 +220,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
 
             <div className="space-y-2">
               <Label>Max Sq Ft</Label>
-              <Select value={filters.maxSqft || ''} onValueChange={(val) => handleChange('maxSqft', val)}>
+              <Select value={filters.maxSqft || '999999'} onValueChange={(val) => handleChange('maxSqft', val === '999999' ? '' : val)}>
                 <SelectTrigger>
                   <SelectValue placeholder="No max" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={null}>No max</SelectItem>
+                  <SelectItem value="999999">No max</SelectItem>
                   <SelectItem value="1000">1,000 sqft</SelectItem>
                   <SelectItem value="1500">1,500 sqft</SelectItem>
                   <SelectItem value="2000">2,000 sqft</SelectItem>
@@ -217,12 +241,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
           {/* Year Built */}
           <div className="space-y-2">
             <Label>Year Built (min)</Label>
-            <Select value={filters.minYear || ''} onValueChange={(val) => handleChange('minYear', val)}>
+            <Select value={filters.minYear || '0'} onValueChange={(val) => handleChange('minYear', val === '0' ? '' : val)}>
               <SelectTrigger>
                 <SelectValue placeholder="Any year" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={null}>Any year</SelectItem>
+                <SelectItem value="0">Any year</SelectItem>
                 <SelectItem value="2020">2020 or newer</SelectItem>
                 <SelectItem value="2010">2010 or newer</SelectItem>
                 <SelectItem value="2000">2000 or newer</SelectItem>
@@ -235,12 +259,12 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
           {/* Garage */}
           <div className="space-y-2">
             <Label>Garage Spaces</Label>
-            <Select value={filters.garage || ''} onValueChange={(val) => handleChange('garage', val)}>
+            <Select value={filters.garage || '0'} onValueChange={(val) => handleChange('garage', val === '0' ? '' : val)}>
               <SelectTrigger>
                 <SelectValue placeholder="Any" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={null}>Any</SelectItem>
+                <SelectItem value="0">Any</SelectItem>
                 <SelectItem value="1">1+</SelectItem>
                 <SelectItem value="2">2+</SelectItem>
                 <SelectItem value="3">3+</SelectItem>
@@ -273,11 +297,11 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
       </Collapsible>
 
       <div className="flex gap-3 pt-4">
-        <Button onClick={handleReset} variant="outline" className="flex-1">
+        <Button onClick={handleReset} variant="outline" className="flex-1 min-w-0">
           <X className="mr-2 h-4 w-4" />
           Reset
         </Button>
-        <Button onClick={() => { onSearch(); setIsOpen(false); }} className="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-900">
+        <Button onClick={() => { onSearch(); setIsOpen(false); }} className="flex-1 min-w-0 bg-amber-500 hover:bg-amber-600 text-slate-900">
           <Search className="mr-2 h-4 w-4" />
           Search
           {activeFilterCount > 0 && (
@@ -291,10 +315,10 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
   );
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl shadow-lg p-6">
+    <div className="bg-white border border-slate-200 rounded-2xl shadow-lg p-6 lg:p-8">
       {/* Desktop Filters */}
       <div className="hidden lg:block">
-        <FilterContent />
+        {filterContent}
       </div>
 
       {/* Mobile Filter Button */}
@@ -306,7 +330,7 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
               Filter Properties
             </Button>
           </SheetTrigger>
-          <SheetContent side="bottom" className="h-[90vh]">
+          <SheetContent side="bottom" className="h-[90vh] overflow-y-auto">
             <SheetHeader>
               <SheetTitle>Filter Properties</SheetTitle>
               <SheetDescription>
@@ -314,7 +338,7 @@ export default function SearchFilters({ filters, onFilterChange, onSearch, onRes
               </SheetDescription>
             </SheetHeader>
             <div className="mt-6">
-              <FilterContent />
+              {filterContent}
             </div>
           </SheetContent>
         </Sheet>

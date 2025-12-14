@@ -33,3 +33,6 @@ dist-ssr
 build
 .cache
 
+# Admin tools (kept outside codebase)
+../homeplaceflorida-property-admin/
+

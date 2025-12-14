@@ -141,7 +141,7 @@ export default function Layout({ children, currentPageName }) {
                 <p className="text-xs text-gray-400">Steve Feler, Realtor, Future Home Realty</p>
               </div>
               <p className="text-gray-400 text-sm">
-                Your trusted partner in Pinellas County real estate since 2005.
+                Your trusted partner in real estate since 2005.
               </p>
             </div>
 

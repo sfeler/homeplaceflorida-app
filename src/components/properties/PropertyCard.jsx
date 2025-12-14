@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
-import { Heart, MapPin, Bed, Bath, Square, Calendar } from 'lucide-react';
+import React from 'react';
+import { MapPin, Bed, Bath, Square } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
-import { User, SavedProperty } from '@/api/entities';
-import { useQueryClient } from '@tanstack/react-query';
 
-export default function PropertyCard({ property, showSaveButton = true }) {
-  const [isSaved, setIsSaved] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const queryClient = useQueryClient();
+export default function PropertyCard({ property }) {
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
@@ -22,43 +16,18 @@ export default function PropertyCard({ property, showSaveButton = true }) {
     }).format(price);
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    try {
-      const user = await User.me();
-      setIsLoading(true);
-      
-      if (isSaved) {
-        // Remove from saved
-        const saved = await SavedProperty.filter({
-          property_id: property.id,
-          user_email: user.email
-        });
-        if (saved.length > 0) {
-          await SavedProperty.delete(saved[0].id);
-        }
-        setIsSaved(false);
-      } else {
-        // Add to saved
-        await SavedProperty.create({
-          property_id: property.id,
-          user_email: user.email
-        });
-        setIsSaved(true);
-      }
-      
-      queryClient.invalidateQueries(['savedProperties']);
-    } catch (error) {
-      // User not logged in - do nothing
-      console.log('User not logged in');
-    } finally {
-      setIsLoading(false);
+  // Get main image - handle both base64 and URL paths
+  const getImageSrc = (imagePath) => {
+    if (!imagePath) return 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80';
+    // If it's already a base64 string or full URL, use it directly
+    if (imagePath.startsWith('data:') || imagePath.startsWith('http')) {
+      return imagePath;
     }
+    // Otherwise it's a relative path, use as-is
+    return imagePath;
   };
 
-  const mainImage = property.images?.[0] || 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80';
+  const mainImage = getImageSrc(property.images?.[0]);
 
   return (
     <Link to={createPageUrl('ListingDetail') + `?id=${property.id}`}>
@@ -69,6 +38,10 @@ export default function PropertyCard({ property, showSaveButton = true }) {
             src={mainImage}
             alt={`${property.title} - ${property.beds} bed ${property.baths} bath ${property.property_type} for sale in ${property.city}, ${property.state} at ${formatPrice(property.price)}`}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            onError={(e) => {
+              // Fallback to placeholder if image fails to load
+              e.target.src = 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80';
+            }}
           />
           
           {/* Overlays */}
@@ -85,19 +58,6 @@ export default function PropertyCard({ property, showSaveButton = true }) {
             <Badge className="absolute top-4 left-4 bg-amber-500 text-slate-900 border-0 font-semibold">
               FEATURED
             </Badge>
-          )}
-
-          {/* Save Button */}
-          {showSaveButton && (
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute top-4 right-4 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full h-10 w-10"
-              onClick={handleSave}
-              disabled={isLoading}
-            >
-              <Heart className={`h-5 w-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-slate-700'}`} />
-            </Button>
           )}
 
           {/* Price */}
@@ -136,11 +96,11 @@ export default function PropertyCard({ property, showSaveButton = true }) {
           </div>
 
           {/* Property Type */}
-          <div className="mt-4 flex items-center justify-between">
+          <div className="mt-4 flex items-center justify-between gap-4">
             <Badge variant="outline" className="text-xs font-medium">
               {property.property_type}
             </Badge>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 whitespace-nowrap">
               Updated {new Date(property.updated_date).toLocaleDateString()}
             </span>
           </div>

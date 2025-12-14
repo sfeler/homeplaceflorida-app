@@ -123,6 +123,106 @@ export const SubmitToHubSpot = async (formData) => {
   return responseData;
 };
 
+/**
+ * Submit form to Web3Forms API
+ * Free tier: 250 submissions/month
+ * 
+ * Setup:
+ * 1. Go to https://web3forms.com/
+ * 2. Enter your email address
+ * 3. Get your Access Key
+ * 4. Add VITE_WEB3FORMS_ACCESS_KEY to your .env file
+ */
+export const SubmitToWeb3Forms = async (formData) => {
+  const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+  console.log('🔍 Web3Forms Debug - Access Key:', WEB3FORMS_ACCESS_KEY ? 'Found ✓' : 'Missing ✗');
+
+  if (!WEB3FORMS_ACCESS_KEY) {
+    console.error('Web3Forms access key not configured');
+    throw new Error('Web3Forms not configured. Please add VITE_WEB3FORMS_ACCESS_KEY to your .env file');
+  }
+
+  // Prepare form data for web3forms
+  const subject = formData.property_id 
+    ? `New ${formData.interest || 'Inquiry'} - Property ID: ${formData.property_id} from ${formData.name}`
+    : `New ${formData.interest || 'Inquiry'} from ${formData.name}`;
+  
+  // Enhance message with property context if available
+  let enhancedMessage = formData.message || '';
+  if (formData.property_id && !enhancedMessage.includes('Property ID')) {
+    enhancedMessage = `Property ID: ${formData.property_id}\n\n${enhancedMessage}`;
+  }
+
+  const payload = {
+    access_key: WEB3FORMS_ACCESS_KEY,
+    subject: subject,
+    from_name: formData.name,
+    email: formData.email,
+    phone: formData.phone || '',
+    interest: formData.interest || 'General Inquiry',
+    message: enhancedMessage,
+    property_id: formData.property_id || '',
+    page_url: window.location.href,
+    page_name: document.title
+  };
+
+  console.log('📤 Sending to Web3Forms:', {
+    name: formData.name,
+    email: formData.email,
+    interest: formData.interest,
+    property_id: formData.property_id || 'N/A'
+  });
+
+  const response = await fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  });
+
+  console.log('📥 Web3Forms Response Status:', response.status, response.statusText);
+
+  const responseData = await response.json();
+  console.log('📥 Web3Forms Response Data:', responseData);
+
+  if (!response.ok || !responseData.success) {
+    console.error('❌ Web3Forms Error:', responseData);
+    throw new Error(`Web3Forms submission failed: ${responseData.message || JSON.stringify(responseData)}`);
+  }
+
+  console.log('✅ Web3Forms Success! Email sent');
+  return responseData;
+};
+
+/**
+ * Smart form submission - tries Web3Forms first, falls back to HubSpot
+ */
+export const SubmitForm = async (formData) => {
+  const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  const HUBSPOT_PORTAL_ID = import.meta.env.VITE_HUBSPOT_PORTAL_ID;
+  const HUBSPOT_FORM_GUID = import.meta.env.VITE_HUBSPOT_FORM_GUID;
+
+  // Try Web3Forms first if configured
+  if (WEB3FORMS_ACCESS_KEY) {
+    try {
+      return await SubmitToWeb3Forms(formData);
+    } catch (error) {
+      console.warn('Web3Forms failed, trying HubSpot...', error);
+      // Fall through to HubSpot if Web3Forms fails
+    }
+  }
+
+  // Fall back to HubSpot if configured
+  if (HUBSPOT_PORTAL_ID && HUBSPOT_FORM_GUID) {
+    return await SubmitToHubSpot(formData);
+  }
+
+  // If neither is configured, throw error
+  throw new Error('No form service configured. Please add VITE_WEB3FORMS_ACCESS_KEY or HubSpot credentials to your .env file');
+};
+
 // Legacy export for backward compatibility
-export const SendEmailViaWeb3Forms = SubmitToHubSpot;
+export const SendEmailViaWeb3Forms = SubmitToWeb3Forms;
 

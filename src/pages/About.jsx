@@ -46,7 +46,7 @@ export default function About() {
                 <span className="text-amber-400 text-sm font-medium tracking-wide">ABOUT HOMEPLACE FLORIDA</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-semibold text-white mb-4">
-                Your Trusted Partner in Pinellas County Real Estate
+                Your Trusted Partner in Real Estate
               </h1>
               <p className="text-xl text-gray-300">
                 Delivering exceptional results through local expertise, innovation, and personalized service since 2010

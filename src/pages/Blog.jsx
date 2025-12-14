@@ -10,6 +10,20 @@ const categories = ['All', 'Market Updates', 'Buyer Tips', 'Seller Tips', 'Neigh
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState('All');
 
+  // Check if content is HTML (contains HTML tags)
+  const isHTML = (content) => {
+    if (!content) return false;
+    const htmlRegex = /<[a-z][\s\S]*>/i;
+    return htmlRegex.test(content);
+  };
+
+  // Strip HTML tags for plain text preview
+  const stripHTML = (html) => {
+    if (!html) return '';
+    // Remove HTML tags using regex
+    return html.replace(/<[^>]*>/g, '').trim();
+  };
+
   const { data: posts, isLoading } = useQuery({
     queryKey: ['blogPosts', activeCategory],
     queryFn: async () => {
@@ -57,9 +71,11 @@ export default function Blog() {
                   <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 mb-4">
                     {featuredPost.title}
                   </h2>
-                  <p className="text-slate-700 mb-6 text-lg">
-                    {featuredPost.excerpt}
-                  </p>
+                  {featuredPost.excerpt && (
+                    <p className="text-slate-700 mb-6 text-lg">
+                      {isHTML(featuredPost.excerpt) ? stripHTML(featuredPost.excerpt) : featuredPost.excerpt}
+                    </p>
+                  )}
                   <BlogCard post={featuredPost} />
                 </div>
                 <div className="rounded-xl overflow-hidden shadow-2xl">

@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { SubmitToHubSpot } from '@/api/integrations';
+import { SubmitForm } from '@/api/integrations';
 
 export default function ContactForm({ propertyId = null, defaultInterest = "General Inquiry" }) {
   const [formData, setFormData] = useState({
@@ -23,10 +23,14 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
     setIsSubmitting(true);
 
     try {
-      console.log('📧 Submitting form to HubSpot...');
+      console.log('📧 Submitting form...', {
+        propertyId: propertyId,
+        interest: formData.interest,
+        name: formData.name
+      });
       
-      // Submit to HubSpot Forms API
-      await SubmitToHubSpot({
+      // Submit form (tries Web3Forms first, falls back to HubSpot)
+      await SubmitForm({
         ...formData,
         property_id: propertyId
       });
@@ -118,6 +122,7 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="List Your Property">List Your Property (Sale or Lease)</SelectItem>
               <SelectItem value="Buy">Buying a Property</SelectItem>
               <SelectItem value="Sell">Selling a Property</SelectItem>
               <SelectItem value="Schedule Tour">Schedule a Tour</SelectItem>
@@ -134,7 +139,11 @@ export default function ContactForm({ propertyId = null, defaultInterest = "Gene
           required
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
-          placeholder="Tell us more about what you're looking for..."
+          placeholder={
+            formData.interest === 'List Your Property'
+              ? "Tell us about your property - address, type, size, price range, and whether you're looking to sell or lease..."
+              : "Tell us more about what you're looking for..."
+          }
           rows={6}
           className="resize-none"
         />
