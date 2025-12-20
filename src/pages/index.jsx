@@ -20,6 +20,12 @@ import AdminDashboard from "./AdminDashboard";
 
 import Neighborhood from "./Neighborhood";
 
+import PrivacyPolicy from "./PrivacyPolicy";
+
+import TermsOfService from "./TermsOfService";
+
+import CookiePolicy from "./CookiePolicy";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
@@ -43,6 +49,12 @@ const PAGES = {
     AdminDashboard: AdminDashboard,
 
     Neighborhoods: Neighborhood,
+
+    PrivacyPolicy: PrivacyPolicy,
+
+    TermsOfService: TermsOfService,
+
+    CookiePolicy: CookiePolicy,
 
 }
 
@@ -90,6 +102,12 @@ function PagesContent() {
                 <Route path="/AdminDashboard" element={<AdminDashboard />} />
 
                 <Route path="/neighborhoods" element={<Neighborhood />} />
+
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
                 
             </Routes>
         </Layout>

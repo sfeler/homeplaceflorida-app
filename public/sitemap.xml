@@ -56,6 +56,28 @@
     <priority>0.5</priority>
   </url>
   
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://homeplaceflorida.com/privacy-policy</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://homeplaceflorida.com/terms-of-service</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://homeplaceflorida.com/cookie-policy</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
   <!-- Note: Property listings and blog posts should be dynamically generated -->
   <!-- This is a static sitemap. Consider implementing dynamic sitemap generation -->
   

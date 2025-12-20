@@ -182,19 +182,9 @@ export default function Layout({ children, currentPageName }) {
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                    Market Reports
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                    Buyer's Guide
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                    Seller's Guide
-                  </a>
+                  <Link to={createPageUrl('Neighborhoods')} className="text-gray-400 hover:text-white transition-colors">
+                    Neighborhoods
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -255,9 +245,9 @@ export default function Layout({ children, currentPageName }) {
               </div>
               
               <div className="flex gap-6 mt-4 md:mt-0">
-                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+                <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+                <Link to="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</Link>
               </div>
             </div>
           </div>
