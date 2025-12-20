@@ -21,7 +21,7 @@ export default function Layout({ children, currentPageName }) {
   const navigation = [
     { name: 'Home', href: createPageUrl('Home'), icon: Home },
     { name: 'Listings', href: createPageUrl('Listings'), icon: Search },
-    { name: 'Neighborhoods', href: createPageUrl('Neighborhood'), icon: Home },
+    { name: 'Neighborhoods', href: createPageUrl('Neighborhoods'), icon: Home },
     { name: 'Blog', href: createPageUrl('Blog'), icon: FileText },
     { name: 'About', href: createPageUrl('About'), icon: Info },
     { name: 'Contact', href: createPageUrl('Contact'), icon: Phone },

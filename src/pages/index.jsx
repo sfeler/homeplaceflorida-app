@@ -23,27 +23,27 @@ import Neighborhood from "./Neighborhood";
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
-    
+
     Home: Home,
-    
+
     Listings: Listings,
-    
+
     ListingDetail: ListingDetail,
-    
+
     Blog: Blog,
-    
+
     BlogPost: BlogPost,
-    
+
     Contact: Contact,
-    
+
     About: About,
-    
+
     SocialMedia: SocialMedia,
-    
+
     AdminDashboard: AdminDashboard,
-    
-    Neighborhood: Neighborhood,
-    
+
+    Neighborhoods: Neighborhood,
+
 }
 
 function _getCurrentPage(url) {
@@ -88,8 +88,8 @@ function PagesContent() {
                 <Route path="/SocialMedia" element={<SocialMedia />} />
                 
                 <Route path="/AdminDashboard" element={<AdminDashboard />} />
-                
-                <Route path="/Neighborhood" element={<Neighborhood />} />
+
+                <Route path="/neighborhoods" element={<Neighborhood />} />
                 
             </Routes>
         </Layout>

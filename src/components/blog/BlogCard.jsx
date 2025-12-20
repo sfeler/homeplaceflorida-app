@@ -44,10 +44,10 @@ export default function BlogCard({ post }) {
       <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 bg-white h-full flex flex-col">
         {/* Image */}
         <div className="relative h-56 overflow-hidden">
-          <img 
+          <img
             src={coverImage}
             alt={post.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
             onError={(e) => {
               e.target.src = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80';
             }}

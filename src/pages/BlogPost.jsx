@@ -64,6 +64,7 @@ export default function BlogPost() {
   };
 
   const coverImage = getImageSrc(post.featured_image || post.cover_image);
+  const imagePosition = post.image_position || 'top'; // Default to 'top' if not specified
 
   // Check if content is HTML (contains HTML tags)
   const isHTML = (content) => {
@@ -104,15 +105,15 @@ export default function BlogPost() {
         </div>
       </div>
 
-      {/* Cover Image */}
-      {coverImage && (
+      {/* Cover Image - Top Position */}
+      {coverImage && imagePosition === 'top' && (
         <div className="bg-black">
           <div className="max-w-5xl mx-auto">
-            <div className="relative h-[50vh] min-h-[400px]">
+            <div className="relative h-[60vh] min-h-[450px] mt-8">
               <img
                 src={coverImage}
                 alt={post.title}
-                className="w-full h-full object-cover opacity-90"
+                className="w-full h-full object-cover object-top opacity-90"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
@@ -124,8 +125,8 @@ export default function BlogPost() {
       )}
 
       {/* Article Content */}
-      <article className={`max-w-4xl mx-auto px-6 lg:px-8 ${coverImage ? 'pt-8 pb-12' : 'pt-8 pb-12'}`}>
-        <div className={`bg-white rounded-2xl shadow-lg p-6 md:p-8 ${coverImage ? '-mt-16 relative z-10' : ''}`}>
+      <article className={`max-w-4xl mx-auto px-6 lg:px-8 ${coverImage && imagePosition === 'top' ? 'pt-12 pb-12' : 'pt-8 pb-12'}`}>
+        <div className={`bg-white rounded-2xl shadow-lg p-6 md:p-8 ${coverImage && imagePosition === 'top' ? '-mt-20 relative z-10' : ''}`}>
           {/* Header */}
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-3">
@@ -185,9 +186,51 @@ export default function BlogPost() {
           )}
 
           {/* Content */}
-          <div className={`${isHTML(post.content) ? 'blog-html-content' : 'prose prose-base max-w-none'} prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-amber-600 prose-strong:text-slate-900`}>
-            {renderContent()}
+          {coverImage && imagePosition === 'inline' && (
+            <div className="mb-8">
+              <img
+                src={coverImage}
+                alt={post.title}
+                className="w-full h-64 md:h-80 object-cover object-top rounded-lg shadow-lg"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
+
+          <div className={`relative ${coverImage && imagePosition === 'right' ? 'md:pr-80' : ''}`}>
+            {coverImage && imagePosition === 'right' && (
+              <div className="hidden md:block absolute top-0 right-0 w-72">
+                <img
+                  src={coverImage}
+                  alt={post.title}
+                  className="w-full h-64 object-cover object-top rounded-lg shadow-lg"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+
+            <div className={`${isHTML(post.content) ? 'blog-html-content' : 'prose prose-base max-w-none'} prose-headings:text-slate-900 prose-p:text-slate-700 prose-a:text-amber-600 prose-strong:text-slate-900`}>
+              {renderContent()}
+            </div>
           </div>
+
+          {/* Bottom Image */}
+          {coverImage && imagePosition === 'bottom' && (
+            <div className="mt-8">
+              <img
+                src={coverImage}
+                alt={post.title}
+                className="w-full h-64 md:h-80 object-cover object-top rounded-lg shadow-lg"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (

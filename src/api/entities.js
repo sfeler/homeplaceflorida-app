@@ -1,6 +1,7 @@
 // JSON-based data storage - no external API
 import propertiesData from '../data/properties.json';
 import blogsData from '../data/blogs.json';
+import neighborhoodsData from '../data/neighborhoods.json';
 
 // Property entity with JSON data
 export const Property = {
@@ -166,13 +167,68 @@ export const SavedProperty = {
   delete: () => Promise.resolve(null),
 };
 
+// Neighborhood entity with JSON data
 export const Neighborhood = {
-  filter: () => Promise.resolve([]),
-  list: () => Promise.resolve([]),
-  get: () => Promise.resolve(null),
-  create: () => Promise.resolve(null),
-  update: () => Promise.resolve(null),
-  delete: () => Promise.resolve(null),
+  filter: async (filters = {}, sortBy = null, limit = 100) => {
+    let results = [...neighborhoodsData];
+
+    // Apply filters
+    if (filters.id) {
+      results = results.filter(n => n.id === filters.id);
+    }
+    if (filters.published !== undefined) {
+      results = results.filter(n => n.published === filters.published);
+    }
+    if (filters.featured !== undefined) {
+      results = results.filter(n => n.featured === filters.featured);
+    }
+
+    // Sort results ONLY if sortBy is explicitly provided
+    // Otherwise, maintain the order from the JSON file (as set in content manager)
+    if (sortBy) {
+      const descending = sortBy.startsWith('-');
+      const field = descending ? sortBy.slice(1) : sortBy;
+      results.sort((a, b) => {
+        const aVal = a[field];
+        const bVal = b[field];
+        if (descending) {
+          return aVal < bVal ? 1 : -1;
+        }
+        return aVal > bVal ? 1 : -1;
+      });
+    }
+    // If no sortBy, keep original JSON order (from content manager)
+
+    // Apply limit
+    if (limit) {
+      results = results.slice(0, limit);
+    }
+
+    return results;
+  },
+
+  list: async () => {
+    return [...neighborhoodsData];
+  },
+
+  get: async (id) => {
+    return neighborhoodsData.find(n => n.id === id) || null;
+  },
+
+  create: async (data) => {
+    console.warn('Neighborhood.create not implemented for JSON data');
+    return null;
+  },
+
+  update: async (id, data) => {
+    console.warn('Neighborhood.update not implemented for JSON data');
+    return null;
+  },
+
+  delete: async (id) => {
+    console.warn('Neighborhood.delete not implemented for JSON data');
+    return null;
+  },
 };
 
 export const User = {

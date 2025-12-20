@@ -10,6 +10,20 @@ import { MapPin, Home, TrendingUp, Users, ArrowRight, Youtube, GraduationCap, Fo
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
+// Check if content is HTML (contains HTML tags)
+const isHTML = (content) => {
+  if (!content) return false;
+  const htmlRegex = /<[a-z][\s\S]*>/i;
+  return htmlRegex.test(content);
+};
+
+// Strip HTML tags for plain text preview
+const stripHTML = (html) => {
+  if (!html) return '';
+  // Remove HTML tags using regex
+  return html.replace(/<[^>]*>/g, '').trim();
+};
+
 export default function Neighborhood() {
   const urlParams = new URLSearchParams(window.location.search);
   const citySlug = urlParams.get('city');
@@ -20,10 +34,11 @@ export default function Neighborhood() {
     queryFn: () => NeighborhoodEntity.filter({ published: true }, 'name', 100)
   });
 
-  // Find the current neighborhood or default to first one
-  const neighborhood = citySlug 
+  // If citySlug is provided, show individual neighborhood, otherwise show listing
+  const isListingView = !citySlug;
+  const neighborhood = citySlug
     ? allNeighborhoods.find(n => n.slug === citySlug)
-    : allNeighborhoods[0];
+    : null;
 
   const { data: properties = [], isLoading } = useQuery({
     queryKey: ['neighborhood-properties', neighborhood?.name],
@@ -37,7 +52,7 @@ export default function Neighborhood() {
     enabled: !!neighborhood
   });
 
-  const formatPrice = (price) => 
+  const formatPrice = (price) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price);
 
   // Loading state
@@ -47,6 +62,94 @@ export default function Neighborhood() {
         <div className="text-center">
           <Skeleton className="h-12 w-48 mx-auto mb-4" />
           <Skeleton className="h-4 w-64 mx-auto" />
+        </div>
+      </div>
+    );
+  }
+
+  // Listing view - show all neighborhoods
+  if (isListingView) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+        {/* Header */}
+        <div className="bg-slate-900 text-white py-16">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="inline-block mb-4 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full">
+              <span className="text-amber-400 text-sm font-medium tracking-wide">NEIGHBORHOOD GUIDES</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-semibold mb-4">
+              Explore Neighborhoods
+            </h1>
+            <p className="text-xl text-gray-300 max-w-2xl">
+              Discover the perfect community for you with our comprehensive neighborhood guides
+            </p>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+          {/* Neighborhoods Grid */}
+          {allNeighborhoods.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {allNeighborhoods.map((neighborhood) => (
+                <Link
+                  key={neighborhood.id}
+                  to={createPageUrl('Neighborhoods') + `?city=${neighborhood.slug}`}
+                  className="group"
+                >
+                  <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div className="aspect-video relative overflow-hidden">
+                      <img
+                        src={neighborhood.hero_image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80'}
+                        alt={`${neighborhood.name}, ${neighborhood.state} skyline`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <Badge className="bg-amber-500 text-slate-900 mb-2">Neighborhood Guide</Badge>
+                        <h3 className="text-xl font-semibold text-white">
+                          {neighborhood.name}, {neighborhood.state}
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-slate-600 mb-4 line-clamp-2">
+                        {neighborhood.short_description || (neighborhood.description ? stripHTML(neighborhood.description).slice(0, 120) : null) || 'Discover this vibrant community...'}
+                      </p>
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="text-center">
+                          <div className="font-semibold text-slate-900">
+                            {neighborhood.avg_home_price ? formatPrice(neighborhood.avg_home_price) : '—'}
+                          </div>
+                          <div className="text-slate-500">Avg. Price</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="font-semibold text-slate-900">
+                            {neighborhood.school_rating || 'A'}
+                          </div>
+                          <div className="text-slate-500">School Rating</div>
+                        </div>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <span className="text-amber-600 font-medium group-hover:text-amber-700 transition-colors">
+                          View Guide →
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <MapPin className="h-16 w-16 text-slate-300 mx-auto mb-4" />
+              <h3 className="text-2xl font-semibold text-slate-900 mb-2">
+                No Neighborhoods Yet
+              </h3>
+              <p className="text-slate-600">
+                Check back soon for comprehensive neighborhood guides.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -73,7 +176,7 @@ export default function Neighborhood() {
           <MapPin className="h-16 w-16 text-slate-300 mx-auto mb-4" />
           <h2 className="text-2xl font-semibold text-slate-900 mb-2">Neighborhood Not Found</h2>
           <p className="text-slate-500 mb-4">The requested neighborhood doesn't exist.</p>
-          <Link to={createPageUrl('Neighborhood')}>
+          <Link to={createPageUrl('Neighborhoods')}>
             <Button>View All Neighborhoods</Button>
           </Link>
         </div>
@@ -89,7 +192,7 @@ export default function Neighborhood() {
         title={seo.title}
         description={seo.description}
         keywords={seo.keywords}
-        canonicalUrl={`${window.location.origin}/Neighborhood?city=${neighborhood.slug}`}
+        canonicalUrl={`${window.location.origin}/neighborhoods?city=${neighborhood.slug}`}
         ogImage={neighborhood.hero_image}
       />
 
@@ -108,7 +211,7 @@ export default function Neighborhood() {
               {neighborhood.name}, {neighborhood.state}
             </h1>
             <p className="text-xl text-gray-200 max-w-2xl">
-              {neighborhood.short_description || neighborhood.description?.slice(0, 150)}
+              {neighborhood.short_description || (neighborhood.description ? stripHTML(neighborhood.description).slice(0, 150) : null)}
             </p>
           </div>
         </div>
@@ -144,7 +247,7 @@ export default function Neighborhood() {
         {/* Description */}
         <div className="bg-white rounded-xl p-8 mb-12">
           <h2 className="text-2xl font-semibold text-slate-900 mb-4">About {neighborhood.name}</h2>
-          <p className="text-slate-600 leading-relaxed">{neighborhood.description}</p>
+          <div className="text-slate-600 leading-relaxed prose prose-slate max-w-none" dangerouslySetInnerHTML={{ __html: neighborhood.description }} />
           {neighborhood.population && (
             <p className="text-sm text-slate-500 mt-4">Population: {neighborhood.population}</p>
           )}
@@ -187,6 +290,16 @@ export default function Neighborhood() {
           </div>
         )}
 
+        {/* Map */}
+        {neighborhood.map_embed && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-6">Location Map</h2>
+            <div className="rounded-xl overflow-hidden shadow-lg border border-slate-200">
+              <div dangerouslySetInnerHTML={{ __html: neighborhood.map_embed }} />
+            </div>
+          </div>
+        )}
+
         {/* Neighborhood Highlights */}
         {neighborhood.highlights && neighborhood.highlights.length > 0 && (
           <div className="mb-12">
@@ -207,7 +320,7 @@ export default function Neighborhood() {
           <h2 className="text-2xl font-semibold text-slate-900 mb-6">Explore Other Areas</h2>
           <div className="flex flex-wrap gap-2">
             {allNeighborhoods.map((n) => (
-              <Link key={n.id} to={createPageUrl('Neighborhood') + `?city=${n.slug}`}>
+              <Link key={n.id} to={createPageUrl('Neighborhoods') + `?city=${n.slug}`}>
                 <Badge 
                   variant={n.slug === neighborhood.slug ? 'default' : 'outline'}
                   className={`cursor-pointer text-sm py-2 px-4 ${n.slug === neighborhood.slug ? 'bg-amber-500 text-slate-900' : 'hover:bg-slate-100'}`}

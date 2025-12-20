@@ -1,0 +1,118 @@
+[
+  {
+    "id": "neigh-001",
+    "name": "Seminole",
+    "slug": "seminole",
+    "state": "FL",
+    "description": "<p>Seminole is a thriving waterfront city in Pinellas County, Florida, offering residents an exceptional quality of life with over 40 miles of shoreline along the Gulf of Mexico. Known for its championship golf courses, excellent schools, and family-oriented communities, Seminole provides a perfect blend of suburban tranquility and coastal living. The city features beautiful parks, marinas, and recreational facilities, making it ideal for boating enthusiasts and outdoor lovers.</p>",
+    "short_description": "A waterfront paradise with championship golf courses and excellent schools along the Gulf Coast.",
+    "hero_image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80",
+    "gallery_images": [
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80",
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80"
+    ],
+    "youtube_url": "",
+    "highlights": [
+      "40+ miles of Gulf shoreline",
+      "Championship golf courses",
+      "Top-rated Seminole schools",
+      "Family-friendly communities",
+      "Boating and water activities",
+      "Proximity to Tampa/St. Pete"
+    ],
+    "avg_home_price": 425000,
+    "population": "19,000",
+    "school_rating": "A+",
+    "walkability_score": 65,
+    "published": true,
+    "featured": true,
+    "created_date": "2025-12-20T02:59:10.340Z",
+    "updated_date": "2025-12-20T03:25:02.913Z"
+  },
+  {
+    "id": "neigh-002",
+    "name": "Largo",
+    "slug": "largo",
+    "state": "FL",
+    "description": "<p>Largo serves as the county seat of Pinellas County and is home to the world-renowned Florida Aquarium and numerous medical facilities including Largo Medical Center. This vibrant community offers excellent schools, beautiful parks, and a strong sense of community. Largo features the stunning Heritage Village, a living history museum, and is conveniently located near major highways providing easy access to Tampa, St. Petersburg, and Clearwater.</p>",
+    "short_description": "Pinellas County seat with world-class aquarium, excellent healthcare, and convenient location.",
+    "hero_image": "",
+    "gallery_images": [],
+    "youtube_url": "",
+    "highlights": [
+      "Florida Aquarium",
+      "Largo Medical Center",
+      "Heritage Village museum",
+      "Top-rated schools",
+      "Convenient highway access",
+      "Beautiful parks and recreation"
+    ],
+    "avg_home_price": 325000,
+    "population": "82,000",
+    "school_rating": "A-",
+    "walkability_score": 55,
+    "published": true,
+    "featured": false,
+    "created_date": "2025-12-20T03:00:00.000Z",
+    "updated_date": "2025-12-20T03:23:41.507Z"
+  },
+  {
+    "id": "neigh-003",
+    "name": "Clearwater Beach",
+    "slug": "clearwater-beach",
+    "state": "FL",
+    "description": "<p>Clearwater Beach is renowned for its pristine white sand beaches, the iconic Clearwater Beach Pier, and vibrant tourist attractions. This coastal gem offers stunning Gulf views, excellent dining, and a lively atmosphere perfect for visitors and residents alike. The area features luxury beachfront condos, charming historic districts, and world-class fishing opportunities. With its perfect weather and beautiful sunsets, Clearwater Beach provides an idyllic coastal lifestyle.</p>",
+    "short_description": "Iconic Florida Gulf Coast destination with pristine beaches and vibrant pier entertainment.",
+    "hero_image": "",
+    "gallery_images": [],
+    "youtube_url": "https://youtu.be/B685uI7Q29s?si=Nd0ly-2M9L03DQpw",
+    "highlights": [
+      "Pristine white sand beaches",
+      "Iconic Clearwater Pier",
+      "World-class fishing",
+      "Luxury beachfront condos",
+      "Vibrant dining scene",
+      "Perfect Florida weather"
+    ],
+    "avg_home_price": 650000,
+    "population": "1,500",
+    "school_rating": "B+",
+    "walkability_score": 75,
+    "published": true,
+    "featured": true,
+    "created_date": "2025-12-20T03:01:00.000Z",
+    "updated_date": "2025-12-20T03:17:02.170Z"
+  },
+  {
+    "id": "neigh-004",
+    "name": "Downtown St. Petersburg",
+    "slug": "downtown-st-petersburg",
+    "state": "FL",
+    "description": "<p>Downtown St. Petersburg is Florida's first 'Great Neighborhood' and serves as the vibrant urban heart of the Tampa Bay area. This historic district features stunning waterfront views along Tampa Bay, world-class museums including the Tampa Museum of Art and Florida Aquarium, and premier sports venues like Tropicana Field. The area boasts beautiful historic architecture, trendy restaurants, craft breweries, and a thriving arts scene, making it perfect for urban professionals and culture enthusiasts.</p>",
+    "short_description": "Florida's first 'Great Neighborhood' with world-class museums, waterfront dining, and urban sophistication.",
+    "hero_image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80",
+    "gallery_images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
+      "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
+      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80"
+    ],
+    "youtube_url": "",
+    "highlights": [
+      "World-class museums",
+      "Tampa Bay waterfront",
+      "Historic architecture",
+      "Craft breweries & dining",
+      "Premier sports venues",
+      "Thriving arts scene"
+    ],
+    "avg_home_price": 485000,
+    "population": "15,000",
+    "school_rating": "A-",
+    "walkability_score": 85,
+    "published": true,
+    "featured": true,
+    "map_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5634.901!2d-82.6401!3d27.7709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2e8d4e5f6a7b%3A0x8c9d0e1f2a3b4c!2sDowntown%20St.%20Petersburg%2C%20St.%20Petersburg%2C%20FL!5e0!3m2!1sen!2sus!4v1703123456789!5m2!1sen!2sus\" width=\"100%\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+    "created_date": "2025-12-20T03:02:00.000Z",
+    "updated_date": "2025-12-20T03:02:00.000Z"
+  }
+]
