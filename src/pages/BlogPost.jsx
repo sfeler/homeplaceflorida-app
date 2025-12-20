@@ -201,7 +201,7 @@ export default function BlogPost() {
               <img
                 src={coverImage}
                 alt={post.title}
-                className="w-full h-96 md:h-[500px] object-cover object-top rounded-lg shadow-lg"
+                className="w-full h-auto md:h-[500px] object-contain md:object-cover object-top rounded-lg shadow-lg"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
@@ -215,7 +215,7 @@ export default function BlogPost() {
                 <img
                   src={coverImage}
                   alt={post.title}
-                  className="w-full h-64 object-cover object-top rounded-lg shadow-lg"
+                  className="w-full h-auto md:h-64 object-contain md:object-cover object-top rounded-lg shadow-lg"
                   onError={(e) => {
                     e.target.style.display = 'none';
                   }}
@@ -234,7 +234,7 @@ export default function BlogPost() {
               <img
                 src={coverImage}
                 alt={post.title}
-                className="w-full h-96 md:h-[500px] object-cover object-top rounded-lg shadow-lg"
+                className="w-full h-auto md:h-[500px] object-contain md:object-cover object-top rounded-lg shadow-lg"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}
