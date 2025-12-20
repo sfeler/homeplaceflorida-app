@@ -64,7 +64,7 @@ export default function BlogPost() {
   };
 
   const coverImage = getImageSrc(post.featured_image || post.cover_image);
-  const imagePosition = post.image_position || 'top'; // Default to 'top' if not specified
+  const imagePosition = post.image_position || 'inline'; // Default to 'inline' to show images within article content
 
   // Check if content is HTML (contains HTML tags)
   const isHTML = (content) => {
