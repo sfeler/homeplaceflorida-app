@@ -193,9 +193,7 @@ export default function Layout({ children, currentPageName }) {
             <div>
               <h3 className="font-semibold mb-4">Contact</h3>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>10575 68th Ave North</li>
-                <li>Suite B-2, Seminole, FL 33772</li>
-                <li className="pt-2">
+                <li>
                   <a href="tel:7274926291" className="hover:text-white transition-colors">
                     (727) 492-6291
                   </a>
