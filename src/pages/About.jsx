@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/shared/SEOHead';
 
 const values = [
   {
@@ -29,8 +30,33 @@ const values = [
 ];
 
 export default function About() {
+  const seoData = {
+    title: 'About HomePlace Florida Real Estate | Home Place Florida | Expert Realtors in Pinellas County',
+    description: 'Learn about HomePlace Florida (Home Place Florida) Real Estate. Since 2010, we\'ve sold 500+ homes with $150M+ in sales volume. 98% client satisfaction. Expert local knowledge of St. Petersburg, Clearwater, and Pinellas County real estate market.',
+    keywords: 'about HomePlace Florida, about Home Place Florida, home placeflorida, homeplace florida real estate, home place florida real estate, Pinellas County realtors, St Petersburg real estate agents, Clearwater realtors, Florida real estate experts, local real estate knowledge, trusted realtors Florida',
+    canonicalUrl: 'https://homeplaceflorida.com/About',
+    ogImage: 'https://homeplaceflorida.com/images/logos/HPF_Logo_White.png',
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About HomePlace Florida Real Estate",
+      "description": "Learn about our team, values, and commitment to exceptional real estate service in Pinellas County, Florida",
+      "url": "https://homeplaceflorida.com/About",
+      "      mainEntity": {
+        "@type": "RealEstateAgent",
+        "name": "HomePlace Florida Real Estate",
+        "alternateName": ["Home Place Florida", "Home Place Florida Real Estate", "HomePlaceFlorida"],
+        "foundingDate": "2010",
+        "areaServed": ["St. Petersburg", "Clearwater", "Pinellas County"],
+        "knowsAbout": ["Residential Real Estate", "Property Sales", "Buyer Representation", "Seller Representation"],
+        "slogan": "Your Trusted Partner in Real Estate"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEOHead {...seoData} />
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[400px] bg-slate-900">
         <div 

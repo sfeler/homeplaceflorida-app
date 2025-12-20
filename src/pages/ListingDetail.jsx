@@ -52,6 +52,38 @@ export default function ListingDetail() {
   const formatPrice = (price) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(price);
   const seo = property ? generatePropertySEO(property) : null;
 
+  // Enhanced breadcrumb structured data
+  const breadcrumbData = property ? {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://homeplaceflorida.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Listings",
+        "item": "https://homeplaceflorida.com/Listings"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": property.city,
+        "item": `https://homeplaceflorida.com/Listings?location=${property.city}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": property.title,
+        "item": `https://homeplaceflorida.com/ListingDetail?id=${property.id}`
+      }
+    ]
+  } : null;
+
   // Open lightbox
   const openLightbox = (index) => {
     setLightboxIndex(index);
@@ -261,8 +293,10 @@ export default function ListingDetail() {
           title={seo.title}
           description={seo.description}
           keywords={seo.keywords}
-          canonicalUrl={`${window.location.origin}/ListingDetail?id=${property.id}`}
+          canonicalUrl={`https://homeplaceflorida.com/ListingDetail?id=${property.id}`}
           ogImage={seo.ogImage}
+          ogType="product"
+          structuredData={[...seo.structuredData, breadcrumbData].filter(Boolean)}
         />
       )}
       {/* Back Button */}

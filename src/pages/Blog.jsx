@@ -4,6 +4,7 @@ import { BlogPost } from '@/api/entities';
 import BlogCard from '../components/blog/BlogCard';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
+import SEOHead from '../components/shared/SEOHead';
 
 const categories = ['All', 'Market Updates', 'Buyer Tips', 'Seller Tips', 'Neighborhood Spotlights', 'Financing', 'Lifestyle'];
 
@@ -43,8 +44,32 @@ export default function Blog() {
     }
   });
 
+  const seoData = {
+    title: 'Real Estate Blog | Market Insights & Home Buying Tips | HomePlace Florida',
+    description: 'Expert real estate advice, market updates, and local insights from HomePlace Florida. Learn about buying and selling homes in Pinellas County, St. Petersburg, and Clearwater. Tips for first-time buyers, sellers, and investors.',
+    keywords: 'Florida real estate blog, home buying tips, home selling advice, Pinellas County market updates, St Petersburg real estate news, Clearwater housing market, real estate investment tips, first time home buyer Florida',
+    canonicalUrl: 'https://homeplaceflorida.com/Blog',
+    ogImage: featuredPost?.cover_image || 'https://homeplaceflorida.com/images/logos/HPF_Logo_White.png',
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "HomePlace Florida Real Estate Blog",
+      "description": "Expert insights, market updates, and tips for buying and selling homes in Florida",
+      "url": "https://homeplaceflorida.com/Blog",
+      "publisher": {
+        "@type": "Organization",
+        "name": "HomePlace Florida Real Estate",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://homeplaceflorida.com/images/logos/HPF_Logo_White.png"
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEOHead {...seoData} />
       {/* Header */}
       <div className="bg-slate-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

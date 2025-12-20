@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import ContactForm from '../components/shared/ContactForm';
 import { Card } from '@/components/ui/card';
 import { Home, Mail, Phone } from 'lucide-react';
+import SEOHead from '../components/shared/SEOHead';
 
 export default function Listings() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -145,8 +146,41 @@ export default function Listings() {
     });
   };
 
+  const seoData = {
+    title: 'Homes for Sale in Florida | Browse Property Listings | HomePlace Florida Real Estate',
+    description: `Explore ${properties?.length || 'our'} homes for sale in Pinellas County, Florida. Find single-family homes, condos, townhouses, and waterfront properties in St. Petersburg, Clearwater, and surrounding areas. View photos, prices, and schedule tours today.`,
+    keywords: 'homes for sale Florida, Pinellas County real estate, St Petersburg homes, Clearwater properties, Tampa Bay homes, Florida property listings, houses for sale, condos for sale Florida, waterfront homes Florida',
+    canonicalUrl: 'https://homeplaceflorida.com/Listings',
+    ogImage: properties?.[0]?.images?.[0] || 'https://homeplaceflorida.com/images/logos/HPF_Logo_White.png',
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Homes for Sale in Florida",
+      "description": "Browse our collection of homes for sale in Pinellas County, Florida",
+      "url": "https://homeplaceflorida.com/Listings",
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://homeplaceflorida.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Listings",
+            "item": "https://homeplaceflorida.com/Listings"
+          }
+        ]
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEOHead {...seoData} />
       {/* Header - Only show when there are properties or loading */}
       {!(allPropertiesCount === 0 && !isLoading) && (
         <div className="bg-slate-900 text-white py-16">

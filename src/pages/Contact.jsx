@@ -2,10 +2,56 @@ import React from 'react';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import ContactForm from '../components/shared/ContactForm';
+import SEOHead from '../components/shared/SEOHead';
 
 export default function Contact() {
+  const seoData = {
+    title: 'Contact HomePlace Florida Real Estate | Home Place Florida | Get in Touch',
+    description: 'Contact HomePlace Florida (Home Place Florida) Real Estate for expert assistance with buying or selling homes in Pinellas County. Call (727) 492-6291 or visit our Seminole office. Available Monday-Saturday with flexible appointment times.',
+    keywords: 'contact HomePlace Florida, contact Home Place Florida, home placeflorida contact, homeplace florida real estate, Pinellas County realtor contact, St Petersburg real estate agent, Clearwater realtor phone, Florida real estate consultation, schedule home tour, real estate appointment',
+    canonicalUrl: 'https://homeplaceflorida.com/Contact',
+    ogImage: 'https://homeplaceflorida.com/images/logos/HPF_Logo_White.png',
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact HomePlace Florida Real Estate",
+      "description": "Get in touch with our expert real estate team",
+      "url": "https://homeplaceflorida.com/Contact",
+      "      mainEntity": {
+        "@type": "RealEstateAgent",
+        "name": "HomePlace Florida Real Estate",
+        "alternateName": ["Home Place Florida", "Home Place Florida Real Estate", "HomePlaceFlorida"],
+        "telephone": "+1-727-492-6291",
+        "email": "steve@homeplaceflorida.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "10575 68th Ave North, Suite B-2",
+          "addressLocality": "Seminole",
+          "addressRegion": "FL",
+          "postalCode": "33772",
+          "addressCountry": "US"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "10:00",
+            "closes": "16:00"
+          }
+        ]
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEOHead {...seoData} />
       {/* Header */}
       <div className="bg-slate-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

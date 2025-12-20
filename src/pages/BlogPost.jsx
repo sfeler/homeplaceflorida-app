@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import ReactMarkdown from 'react-markdown';
+import SEOHead, { generateBlogSEO } from '../components/shared/SEOHead';
 
 export default function BlogPost() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -65,6 +66,9 @@ export default function BlogPost() {
 
   const coverImage = getImageSrc(post.featured_image || post.cover_image);
   const imagePosition = post.image_position || 'inline'; // Default to 'inline' to show images within article content
+  
+  // Generate SEO data for this blog post
+  const seoData = post ? generateBlogSEO(post) : null;
 
   // Check if content is HTML (contains HTML tags)
   const isHTML = (content) => {
@@ -93,6 +97,12 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {seoData && (
+        <SEOHead 
+          {...seoData}
+          canonicalUrl={`https://homeplaceflorida.com/BlogPost?id=${post.id}`}
+        />
+      )}
       {/* Back Button */}
       <div className="bg-white border-b sticky top-20 z-40 shadow-sm">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 py-4">

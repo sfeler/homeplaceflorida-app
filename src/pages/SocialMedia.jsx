@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Youtube, Instagram } from 'lucide-react';
+import SEOHead from '../components/shared/SEOHead';
 
 export default function SocialMedia() {
   const socialLinks = [
@@ -32,8 +33,33 @@ export default function SocialMedia() {
     }
   ];
 
+  const seoData = {
+    title: 'Follow HomePlace Florida on Social Media | YouTube, Instagram, TikTok',
+    description: 'Connect with HomePlace Florida Real Estate on social media. Follow us on YouTube for property tours, Instagram for beautiful homes, and TikTok for quick real estate tips. Stay updated on Pinellas County real estate.',
+    keywords: 'HomePlace Florida social media, real estate YouTube channel, Florida real estate Instagram, property tours TikTok, Pinellas County real estate social, follow real estate agent',
+    canonicalUrl: 'https://homeplaceflorida.com/SocialMedia',
+    ogImage: 'https://homeplaceflorida.com/images/logos/HPF_Logo_White.png',
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Social Media - HomePlace Florida Real Estate",
+      "description": "Follow HomePlace Florida Real Estate on social media platforms",
+      "url": "https://homeplaceflorida.com/SocialMedia",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "HomePlace Florida Real Estate",
+        "sameAs": [
+          "https://www.youtube.com/@homeplaceflorida",
+          "https://www.tiktok.com/@homeplaceflorida",
+          "https://www.instagram.com/homeplaceflorida/"
+        ]
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEOHead {...seoData} />
       {/* Header */}
       <div className="bg-slate-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
