@@ -26,6 +26,7 @@
     "walkability_score": 65,
     "published": true,
     "featured": true,
+    "map_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5634.901!2d-82.791!3d27.839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2e7b4c5d6e7f%3A0x9e0f1g2h3i4j!2sSeminole%2C%20FL!5e0!3m2!1sen!2sus!4v1703123456789!5m2!1sen!2sus\" width=\"100%\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
     "created_date": "2025-12-20T02:59:10.340Z",
     "updated_date": "2025-12-20T03:25:02.913Z"
   },
@@ -53,6 +54,7 @@
     "walkability_score": 55,
     "published": true,
     "featured": false,
+    "map_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5634.901!2d-82.787!3d27.909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2e6c5d4e3f2a%3A0x1b2c3d4e5f6g7h!2sLargo%2C%20FL!5e0!3m2!1sen!2sus!4v1703123456789!5m2!1sen!2sus\" width=\"100%\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
     "created_date": "2025-12-20T03:00:00.000Z",
     "updated_date": "2025-12-20T03:23:41.507Z"
   },
@@ -80,6 +82,7 @@
     "walkability_score": 75,
     "published": true,
     "featured": true,
+    "map_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5634.901!2d-82.827!3d27.979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2e5b4c3d2e1a%3A0x2c3d4e5f6g7h8i!2sClearwater%20Beach%2C%20Clearwater%2C%20FL!5e0!3m2!1sen!2sus!4v1703123456789!5m2!1sen!2sus\" width=\"100%\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
     "created_date": "2025-12-20T03:01:00.000Z",
     "updated_date": "2025-12-20T03:17:02.170Z"
   },
