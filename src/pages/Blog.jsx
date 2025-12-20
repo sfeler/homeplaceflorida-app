@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { BlogPost } from '@/api/entities';
 import BlogCard from '../components/blog/BlogCard';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import SEOHead from '../components/shared/SEOHead';
 
-const categories = ['All', 'Market Updates', 'Buyer Tips', 'Seller Tips', 'Neighborhood Spotlights', 'Financing', 'Lifestyle'];
-
 export default function Blog() {
-  const [activeCategory, setActiveCategory] = useState('All');
 
   // Check if content is HTML (contains HTML tags)
   const isHTML = (content) => {
@@ -26,12 +22,9 @@ export default function Blog() {
   };
 
   const { data: posts, isLoading } = useQuery({
-    queryKey: ['blogPosts', activeCategory],
+    queryKey: ['blogPosts'],
     queryFn: async () => {
-      if (activeCategory === 'All') {
-        return await BlogPost.filter({ published: true }, '-created_date', 50);
-      }
-      return await BlogPost.filter({ published: true, category: activeCategory }, '-created_date', 50);
+      return await BlogPost.filter({ published: true }, '-created_date', 50);
     },
     initialData: []
   });
@@ -114,23 +107,6 @@ export default function Blog() {
             </div>
           </div>
         )}
-
-        {/* Category Tabs */}
-        <div className="mb-8 overflow-x-auto">
-          <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-            <TabsList className="bg-slate-100 p-1">
-              {categories.map((category) => (
-                <TabsTrigger 
-                  key={category} 
-                  value={category}
-                  className="data-[state=active]:bg-amber-500 data-[state=active]:text-slate-900"
-                >
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
 
         {/* Posts Grid */}
         {isLoading ? (
