@@ -70,21 +70,6 @@ export default function Contact() {
           <div className="lg:col-span-1 space-y-6">
             <Card className="p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <MapPin className="h-6 w-6 text-amber-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-slate-900 mb-1">Office Location</h3>
-                  <p className="text-slate-600">
-                    10575 68th Ave North<br />
-                    Suite B-2, Seminole, FL 33772
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
                   <Phone className="h-6 w-6 text-blue-600" />
                 </div>
