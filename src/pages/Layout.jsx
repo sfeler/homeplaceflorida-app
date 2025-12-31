@@ -133,8 +133,9 @@ export default function Layout({ children, currentPageName }) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-slate-700 hover:text-slate-900"
+              className="md:hidden flex items-center gap-2 p-2 text-slate-700 hover:text-slate-900"
             >
+              <span className="text-sm font-medium">Menu</span>
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
