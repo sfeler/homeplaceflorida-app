@@ -1,0 +1,52 @@
+[
+  {
+    "id": "dining-001",
+    "title": "Ulele",
+    "slug": "ulele",
+    "location": "1810 N Highland Ave, Tampa, FL 33602",
+    "short_description": "Native-inspired cuisine in a historic building with waterfront views",
+    "description": "<p>Ulele celebrates the vibrant fusion of the ingredients from Florida waters and land once home to many Native Americans, including the young princess Ulele. The restaurant is located in the historic Tampa Heights Water Works building, built in 1903, and features stunning views of the Hillsborough River.</p><p>The menu showcases fresh seafood, steaks, and produce prepared on a barbacoa grill, creating unique flavors that honor Florida's rich culinary heritage. Don't miss their craft beers brewed on-site at the Ulele Spring Brewery.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://ulele.com",
+    "phone": "(813) 999-4952",
+    "highlights": [
+      "Waterfront dining on the Hillsborough River",
+      "Native-inspired Florida cuisine",
+      "On-site craft brewery",
+      "Historic 1903 building",
+      "Outdoor patio seating"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "dining",
+    "created_at": "2024-01-15T10:00:00.000Z",
+    "updated_at": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "dining-002",
+    "title": "Bern's Steak House",
+    "slug": "berns-steak-house",
+    "location": "1208 S Howard Ave, Tampa, FL 33606",
+    "short_description": "Legendary steakhouse with an extensive wine collection and famous dessert room",
+    "description": "<p>Bern's Steak House is a Tampa institution, renowned for its perfectly aged steaks, organic vegetables grown in their own farm, and one of the world's largest wine collections with over 6,800 selections.</p><p>Every steak is cut to order and cooked to your exact specifications. After dinner, guests are invited upstairs to the Harry Waugh Dessert Room, a unique experience featuring private booths, an extensive dessert menu, and vintage ports.</p><p>The restaurant has been family-owned and operated since 1956, maintaining its commitment to quality and exceptional service.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://bernssteakhouse.com",
+    "phone": "(813) 251-2421",
+    "highlights": [
+      "World-famous aged steaks",
+      "6,800+ wine selections",
+      "Harry Waugh Dessert Room",
+      "Organic vegetables from own farm",
+      "Family-owned since 1956"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "dining",
+    "created_at": "2024-01-15T10:30:00.000Z",
+    "updated_at": "2024-01-15T10:30:00.000Z"
+  }
+]

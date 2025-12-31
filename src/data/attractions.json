@@ -1,0 +1,52 @@
+[
+  {
+    "id": "attraction-001",
+    "title": "Busch Gardens Tampa Bay",
+    "slug": "busch-gardens-tampa-bay",
+    "location": "10165 N McKinley Dr, Tampa, FL 33612",
+    "short_description": "African-themed adventure park with thrilling roller coasters and animal encounters",
+    "description": "<p>Busch Gardens Tampa Bay is a 335-acre African-themed animal theme park that combines world-class thrill rides with up-close animal encounters. The park is home to more than 12,000 animals representing over 300 species.</p><p>Experience some of the world's most intense roller coasters including SheiKra, a floorless dive coaster with a 90-degree drop, and Iron Gwazi, North America's tallest and fastest hybrid coaster. The park also features live shows, dining experiences, and seasonal events like Howl-O-Scream and Christmas Town.</p><p>Explore themed areas like Serengeti Plain, where you can see giraffes, zebras, and rhinos roaming freely, or visit the Edge of Africa for walking safari experiences.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1594623930572-300a3011d9ae?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://buschgardens.com/tampa",
+    "phone": "(813) 884-4386",
+    "highlights": [
+      "12,000+ animals from 300+ species",
+      "World-class roller coasters",
+      "Live entertainment shows",
+      "Seasonal events year-round",
+      "African-themed experiences"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "attractions",
+    "created_at": "2024-01-15T11:00:00.000Z",
+    "updated_at": "2024-01-15T11:00:00.000Z"
+  },
+  {
+    "id": "attraction-002",
+    "title": "Florida Aquarium",
+    "slug": "florida-aquarium",
+    "location": "701 Channelside Dr, Tampa, FL 33602",
+    "short_description": "Interactive aquarium showcasing Florida's diverse aquatic ecosystems",
+    "description": "<p>The Florida Aquarium is a 501(c)(3) not-for-profit organization dedicated to inspiring stewardship of our natural environment. Located in downtown Tampa's Channel District, the aquarium features more than 8,000 aquatic plants and animals from around the world.</p><p>Journey through multiple exhibits including Wetlands Trail, Bays and Beaches, Coral Reef, and Ocean Commotion. Experience hands-on touch tanks, watch playful otters, and walk through a 360-degree underwater tunnel surrounded by sharks, sea turtles, and stingrays.</p><p>The aquarium also offers unique experiences like Wild Dolphin Cruises, Dive with the Sharks programs, and behind-the-scenes tours. Their conservation efforts include coral restoration and sea turtle rehabilitation.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://www.flaquarium.org",
+    "phone": "(813) 273-4000",
+    "highlights": [
+      "8,000+ aquatic animals",
+      "360-degree underwater tunnel",
+      "Wild dolphin cruises",
+      "Interactive touch tanks",
+      "Conservation and education programs"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "attractions",
+    "created_at": "2024-01-15T11:30:00.000Z",
+    "updated_at": "2024-01-15T11:30:00.000Z"
+  }
+]

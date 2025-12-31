@@ -1,0 +1,52 @@
+[
+  {
+    "id": "outdoors-001",
+    "title": "Clearwater Beach",
+    "slug": "clearwater-beach",
+    "location": "Clearwater Beach, FL 33767",
+    "short_description": "Award-winning white sand beach consistently ranked among America's best beaches",
+    "description": "<p>Clearwater Beach is a world-renowned destination featuring pristine white sand beaches and crystal-clear Gulf of Mexico waters. Consistently ranked as one of the top beaches in the United States, it offers 2.5 miles of sugar-white sand perfect for sunbathing, swimming, and beach activities.</p><p>The beach is known for its calm, shallow waters making it ideal for families with children. Visitors can enjoy a wide range of water sports including parasailing, jet skiing, paddleboarding, and kayaking. The famous Pier 60 hosts nightly sunset celebrations with street performers, artisans, and live music.</p><p>Beach Walk, a promenade along the shore, features shops, restaurants, and cafes. The area is also home to the Clearwater Marine Aquarium, famous for Winter the dolphin from the movie 'Dolphin Tale.' With year-round sunshine and temperatures, Clearwater Beach is perfect for any season.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "https://youtu.be/CfGVtt4KNus?si=E8f5YYGTEFJdiXTH",
+    "website": "https://www.visitclearwaterflorida.com",
+    "phone": "(727) 461-0011",
+    "highlights": [
+      "Award-winning white sand beaches",
+      "Crystal-clear Gulf waters",
+      "Pier 60 sunset celebrations",
+      "Water sports and activities",
+      "Family-friendly shallow waters"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "outdoors",
+    "created_at": "2024-01-15T13:00:00.000Z",
+    "updated_at": "2025-12-31T04:14:08.810Z"
+  },
+  {
+    "id": "outdoors-002",
+    "title": "Lettuce Lake Park",
+    "slug": "lettuce-lake-park",
+    "location": "6920 E Fletcher Ave, Tampa, FL 33637",
+    "short_description": "Natural park featuring boardwalks, wildlife viewing, and scenic river trails",
+    "description": "<p>Lettuce Lake Park is a 240-acre Hillsborough County park offering visitors a chance to experience Florida's natural beauty and wildlife. The park features a 3,500-foot boardwalk and observation tower that winds through a cypress swamp along the Hillsborough River, providing excellent opportunities for wildlife viewing.</p><p>Visitors frequently spot alligators, turtles, wading birds, and other native Florida wildlife from the boardwalk and tower. The park also offers a 1.25-mile paved exercise trail, picnic pavilions, playground, and canoe/kayak launch for exploring the river.</p><p>The park's visitor center features educational exhibits about the local ecosystem and wildlife. Lettuce Lake is a popular destination for photographers, nature enthusiasts, and families looking to experience authentic Florida wilderness just minutes from downtown Tampa. The park hosts guided nature walks and educational programs throughout the year.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://www.hillsboroughcounty.org/en/locations/lettuce-lake-park",
+    "phone": "(813) 987-6204",
+    "highlights": [
+      "3,500-foot boardwalk through cypress swamp",
+      "Observation tower for wildlife viewing",
+      "Alligators and native Florida wildlife",
+      "Canoe and kayak launch",
+      "Educational programs and guided walks"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "outdoors",
+    "created_at": "2024-01-15T13:30:00.000Z",
+    "updated_at": "2024-01-15T13:30:00.000Z"
+  }
+]

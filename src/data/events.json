@@ -1,0 +1,52 @@
+[
+  {
+    "id": "event-001",
+    "title": "Gasparilla Pirate Festival",
+    "slug": "gasparilla-pirate-festival",
+    "location": "Downtown Tampa, FL",
+    "short_description": "Tampa's legendary pirate invasion and parade celebrating over 100 years of tradition",
+    "description": "<p>The Gasparilla Pirate Festival is Tampa's signature event, held annually in late January. The festival commemorates the legend of José Gaspar, a mythical Spanish pirate who supposedly terrorized the coastal waters of West Florida during the late 18th and early 19th centuries.</p><p>The celebration begins with the 'Pirate Invasion' as hundreds of members of Ye Mystic Krewe of Gasparilla, dressed in full pirate regalia, sail into Tampa Bay aboard the Jose Gasparilla, a fully-rigged pirate ship. They then 'capture' the city in a mock battle with local authorities.</p><p>The invasion is followed by the Gasparilla Parade of Pirates, featuring elaborate floats, marching bands, and over 300,000 spectators lining Bayshore Boulevard. The festival includes street parties, live music, food vendors, and family-friendly activities throughout downtown Tampa.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://gasparillapiratefest.com",
+    "phone": "(813) 251-8844",
+    "highlights": [
+      "Over 100 years of tradition",
+      "Pirate ship invasion on Tampa Bay",
+      "300,000+ attendees",
+      "Parade with elaborate floats",
+      "Family-friendly activities"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "events",
+    "created_at": "2024-01-15T12:00:00.000Z",
+    "updated_at": "2024-01-15T12:00:00.000Z"
+  },
+  {
+    "id": "event-002",
+    "title": "Tampa Bay Margarita Festival",
+    "slug": "tampa-bay-margarita-festival",
+    "location": "Curtis Hixon Waterfront Park, Tampa, FL",
+    "short_description": "Annual celebration featuring unlimited margarita tastings and live entertainment",
+    "description": "<p>The Tampa Bay Margarita Festival is an annual summer event held at the beautiful Curtis Hixon Waterfront Park in downtown Tampa. This 21+ event celebrates everything margarita with unlimited tastings of creative margarita flavors from local bars and restaurants.</p><p>Festival-goers can sample dozens of unique margarita variations, from classic lime to exotic fruit flavors and spicy concoctions. The event features live music performances, DJ entertainment, lawn games, and food vendors offering Mexican-inspired cuisine and street food.</p><p>Set against the backdrop of the Hillsborough River and Tampa's skyline, the festival creates a festive atmosphere perfect for enjoying Florida's summer weather. VIP tickets include early entry, exclusive margarita tastings, and access to a premium lounge area.</p>",
+    "featured_image": "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop&q=80",
+    "gallery_images": [],
+    "youtube_url": "",
+    "website": "https://www.tampamargaritafestival.com",
+    "phone": "",
+    "highlights": [
+      "Unlimited margarita tastings",
+      "Live music and entertainment",
+      "Waterfront location",
+      "Food vendors and lawn games",
+      "VIP experience available"
+    ],
+    "published": true,
+    "featured": true,
+    "category": "events",
+    "created_at": "2024-01-15T12:30:00.000Z",
+    "updated_at": "2024-01-15T12:30:00.000Z"
+  }
+]
