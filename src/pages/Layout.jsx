@@ -2,11 +2,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { Home, Search, FileText, Phone, Info, Menu, X, Heart, User, Share2 } from 'lucide-react';
+import { Home, Search, FileText, Phone, Info, Menu, X, Heart, User, Share2, Compass, ChevronDown, Utensils, Calendar, Waves } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { User as UserEntity } from '@/api/entities';
 import CrispChatLabel from '@/components/shared/CrispChatLabel';
 import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Layout({ children, currentPageName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,8 +28,19 @@ export default function Layout({ children, currentPageName }) {
     { name: 'Home', href: createPageUrl('Home'), icon: Home },
     { name: 'Listings', href: createPageUrl('Listings'), icon: Search },
     { name: 'Neighborhoods', href: createPageUrl('Neighborhoods'), icon: Home },
+    { 
+      name: 'Explore Area', 
+      href: createPageUrl('ExploreArea'), 
+      icon: Compass,
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Dining & Nightlife', href: createPageUrl('ExploreArea') + '?category=dining', icon: Utensils },
+        { name: 'Attractions', href: createPageUrl('ExploreArea') + '?category=attractions', icon: Compass },
+        { name: 'Events & Festivals', href: createPageUrl('ExploreArea') + '?category=events', icon: Calendar },
+        { name: 'Beaches, Parks & Outdoors', href: createPageUrl('ExploreArea') + '?category=outdoors', icon: Waves },
+      ]
+    },
     { name: 'Blog', href: createPageUrl('Blog'), icon: FileText },
-    { name: 'About', href: createPageUrl('About'), icon: Info },
     { name: 'Contact', href: createPageUrl('Contact'), icon: Phone },
   ];
 
@@ -50,21 +67,54 @@ export default function Layout({ children, currentPageName }) {
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center gap-1">
-                {navigation.map((item) => (
-                  <Link key={item.name} to={item.href}>
-                    <Button
-                      variant={currentPageName === item.name ? 'default' : 'ghost'}
-                      className={
-                        currentPageName === item.name
-                          ? 'bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium'
-                          : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-medium'
-                      }
-                    >
-                      <item.icon className="h-4 w-4 mr-2" />
-                      {item.name}
-                    </Button>
-                  </Link>
-                ))}
+                {navigation.map((item) => {
+                  if (item.hasDropdown) {
+                    return (
+                      <DropdownMenu key={item.name}>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant={currentPageName === item.name ? 'default' : 'ghost'}
+                            className={
+                              currentPageName === item.name
+                                ? 'bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium'
+                                : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-medium'
+                            }
+                          >
+                            <item.icon className="h-4 w-4 mr-2" />
+                            {item.name}
+                            <ChevronDown className="h-3 w-3 ml-1" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start" className="w-56">
+                          {item.dropdownItems.map((dropdownItem) => (
+                            <DropdownMenuItem key={dropdownItem.name} asChild>
+                              <Link to={dropdownItem.href} className="flex items-center cursor-pointer">
+                                <dropdownItem.icon className="h-4 w-4 mr-2" />
+                                {dropdownItem.name}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    );
+                  }
+                  
+                  return (
+                    <Link key={item.name} to={item.href}>
+                      <Button
+                        variant={currentPageName === item.name ? 'default' : 'ghost'}
+                        className={
+                          currentPageName === item.name
+                            ? 'bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium'
+                            : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-medium'
+                        }
+                      >
+                        <item.icon className="h-4 w-4 mr-2" />
+                        {item.name}
+                      </Button>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -93,21 +143,56 @@ export default function Layout({ children, currentPageName }) {
           {mobileMenuOpen && (
             <div className="md:hidden py-4 border-t border-slate-200">
               <div className="flex flex-col gap-2">
-                {navigation.map((item) => (
-                  <Link key={item.name} to={item.href} onClick={() => setMobileMenuOpen(false)}>
-                    <Button
-                      variant={currentPageName === item.name ? 'default' : 'ghost'}
-                      className={`w-full justify-start ${
-                        currentPageName === item.name
-                          ? 'bg-amber-500 hover:bg-amber-600 text-slate-900'
-                          : 'text-slate-700 hover:text-slate-900'
-                      }`}
-                    >
-                      <item.icon className="h-4 w-4 mr-2" />
-                      {item.name}
-                    </Button>
-                  </Link>
-                ))}
+                {navigation.map((item) => {
+                  if (item.hasDropdown) {
+                    return (
+                      <div key={item.name} className="flex flex-col gap-1">
+                        <Link to={item.href} onClick={() => setMobileMenuOpen(false)}>
+                          <Button
+                            variant={currentPageName === item.name ? 'default' : 'ghost'}
+                            className={`w-full justify-start ${
+                              currentPageName === item.name
+                                ? 'bg-amber-500 hover:bg-amber-600 text-slate-900'
+                                : 'text-slate-700 hover:text-slate-900'
+                            }`}
+                          >
+                            <item.icon className="h-4 w-4 mr-2" />
+                            {item.name}
+                          </Button>
+                        </Link>
+                        <div className="pl-4 flex flex-col gap-1">
+                          {item.dropdownItems.map((dropdownItem) => (
+                            <Link key={dropdownItem.name} to={dropdownItem.href} onClick={() => setMobileMenuOpen(false)}>
+                              <Button
+                                variant="ghost"
+                                className="w-full justify-start text-sm text-slate-600 hover:text-slate-900"
+                              >
+                                <dropdownItem.icon className="h-3 w-3 mr-2" />
+                                {dropdownItem.name}
+                              </Button>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  
+                  return (
+                    <Link key={item.name} to={item.href} onClick={() => setMobileMenuOpen(false)}>
+                      <Button
+                        variant={currentPageName === item.name ? 'default' : 'ghost'}
+                        className={`w-full justify-start ${
+                          currentPageName === item.name
+                            ? 'bg-amber-500 hover:bg-amber-600 text-slate-900'
+                            : 'text-slate-700 hover:text-slate-900'
+                        }`}
+                      >
+                        <item.icon className="h-4 w-4 mr-2" />
+                        {item.name}
+                      </Button>
+                    </Link>
+                  );
+                })}
 
               </div>
             </div>
@@ -161,12 +246,12 @@ export default function Layout({ children, currentPageName }) {
                 </li>
                 <li>
                   <Link to={createPageUrl('Contact')} className="text-gray-400 hover:text-white transition-colors">
-                    Sell
+                    Contact & About
                   </Link>
                 </li>
                 <li>
-                  <Link to={createPageUrl('About')} className="text-gray-400 hover:text-white transition-colors">
-                    About Us
+                  <Link to={createPageUrl('Blog')} className="text-gray-400 hover:text-white transition-colors">
+                    Blog
                   </Link>
                 </li>
               </ul>
@@ -184,6 +269,11 @@ export default function Layout({ children, currentPageName }) {
                 <li>
                   <Link to={createPageUrl('Neighborhoods')} className="text-gray-400 hover:text-white transition-colors">
                     Neighborhoods
+                  </Link>
+                </li>
+                <li>
+                  <Link to={createPageUrl('ExploreArea')} className="text-gray-400 hover:text-white transition-colors">
+                    Explore Area
                   </Link>
                 </li>
               </ul>

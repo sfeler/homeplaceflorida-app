@@ -12,13 +12,13 @@ import BlogPost from "./BlogPost";
 
 import Contact from "./Contact";
 
-import About from "./About";
-
 import SocialMedia from "./SocialMedia";
 
 import AdminDashboard from "./AdminDashboard";
 
 import Neighborhood from "./Neighborhood";
+
+import ExploreArea from "./ExploreArea";
 
 import PrivacyPolicy from "./PrivacyPolicy";
 
@@ -26,7 +26,7 @@ import TermsOfService from "./TermsOfService";
 
 import CookiePolicy from "./CookiePolicy";
 
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 
 const PAGES = {
 
@@ -42,13 +42,13 @@ const PAGES = {
 
     Contact: Contact,
 
-    About: About,
-
     SocialMedia: SocialMedia,
 
     AdminDashboard: AdminDashboard,
 
     Neighborhoods: Neighborhood,
+
+    ExploreArea: ExploreArea,
 
     PrivacyPolicy: PrivacyPolicy,
 
@@ -95,13 +95,15 @@ function PagesContent() {
                 
                 <Route path="/Contact" element={<Contact />} />
                 
-                <Route path="/About" element={<About />} />
+                <Route path="/About" element={<Navigate to="/Contact" replace />} />
                 
                 <Route path="/SocialMedia" element={<SocialMedia />} />
                 
                 <Route path="/AdminDashboard" element={<AdminDashboard />} />
 
                 <Route path="/neighborhoods" element={<Neighborhood />} />
+
+                <Route path="/explorearea" element={<ExploreArea />} />
 
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
